@@ -1,7 +1,9 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { View, Text, Button, Image } from "react-native";
 import { Layout } from "../components/Layout";
+import { ProductCard } from "../components/ProductCard";
 
 function HomeScreen({ navigation }) {
   return (
@@ -17,6 +19,21 @@ function HomeScreen({ navigation }) {
           <Text style={styles.text1}>Summer came early! </Text>
           <Text style={styles.text2}>Shop on MyShop</Text>
         </View>
+
+        <View style={styles.cardContainer}>
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+        </View>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Shop")}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Keep Shopping</Text>
+          <MaterialIcons name="arrow-right" size={24} />
+        </TouchableOpacity>
 
         <Image
           style={styles.image}
@@ -44,7 +61,24 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     fontWeight: "600",
   },
+  cardContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
   text2: { textTransform: "uppercase", color: "gray", fontSize: 12 },
+  button: {
+    flexDirection: "row",
+    width: "100%",
+    borderColor: "#000",
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 45,
+    marginVertical: 15,
+  },
+  buttonText: {
+    textTransform: "uppercase",
+  },
 });
 
 export default HomeScreen;
