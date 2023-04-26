@@ -21,10 +21,7 @@ function HomeScreen({ navigation }) {
         </View>
 
         <View style={styles.cardContainer}>
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          <ProductCard screen={"DetailsStack"} />
         </View>
 
         <TouchableOpacity

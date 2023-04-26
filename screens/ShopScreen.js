@@ -16,10 +16,7 @@ function ShopScreen({ navigation }) {
   const FirstRoute = () => (
     <Layout>
       <View style={styles.cardContainer}>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        <ProductCard screen={"DetailsStack"} />
       </View>
     </Layout>
   );
@@ -27,10 +24,7 @@ function ShopScreen({ navigation }) {
   const SecondRoute = () => (
     <Layout>
       <View style={styles.cardContainer}>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        <ProductCard screen={"DetailsStack"} />
       </View>
     </Layout>
   );
@@ -38,10 +32,7 @@ function ShopScreen({ navigation }) {
   const ThirdRoute = () => (
     <Layout>
       <View style={styles.cardContainer}>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        <ProductCard screen={"DetailsStack"} />
       </View>
     </Layout>
   );
@@ -49,10 +40,7 @@ function ShopScreen({ navigation }) {
   const FourthRoute = () => (
     <Layout>
       <View style={styles.cardContainer}>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        <ProductCard screen={"DetailsStack"} />
       </View>
     </Layout>
   );

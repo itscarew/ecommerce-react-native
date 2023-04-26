@@ -3,7 +3,7 @@ import { StyleSheet, View, SafeAreaView } from "react-native";
 
 export const Layout = ({ children }) => {
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <SafeAreaView style={[styles.container]}>
         <View style={{ flex: 1, width: "92%" }}>{children}</View>
       </SafeAreaView>
@@ -12,6 +12,9 @@ export const Layout = ({ children }) => {
 };
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",

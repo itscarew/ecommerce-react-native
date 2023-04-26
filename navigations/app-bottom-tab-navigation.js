@@ -1,23 +1,20 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
-import HomeScreen from "../screens/HomeScreen";
-import SignInScreen from "../screens/SignInScreen";
-import SignUpScreen from "../screens/SignUpScreen,";
-import ShopScreen from "../screens/ShopScreen";
 import CartScreen from "../screens/CartScreen";
-import SavedScreen from "../screens/SavedScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import { MaterialIcons } from "@expo/vector-icons";
-import { View, TextInput } from "react-native";
-import { Button } from "react-native";
-import { MyShopInput } from "../components/Input";
+import {
+  HomeDetailStackNavigation,
+  ShopDetailStackNavigation,
+} from "./app-stack-navigation";
+import DetailsScreen from "../screens/Details";
 
 const Tab = createBottomTabNavigator();
 
 function TabNavigation() {
   return (
     <Tab.Navigator
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: "black",
         tabBarInactiveTintColor: "gray",
@@ -37,22 +34,22 @@ function TabNavigation() {
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeDetailStackNavigation}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="home" size={24} color={color} />
           ),
-          headerTitle: () => <MyShopInput />,
+          headerShown: false,
         }}
       />
       <Tab.Screen
         name="Shop"
-        component={ShopScreen}
+        component={ShopDetailStackNavigation}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="search" size={24} color={color} />
           ),
-          headerTitle: () => <MyShopInput />,
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -65,16 +62,6 @@ function TabNavigation() {
         }}
       />
       <Tab.Screen
-        name="Saved"
-        component={SavedScreen}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="favorite-border" size={24} color={color} />
-          ),
-          headerTitle: "Saved Items",
-        }}
-      />
-      <Tab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
@@ -82,6 +69,20 @@ function TabNavigation() {
             <MaterialIcons name="person" size={24} color={color} />
           ),
         }}
+      />
+      <Tab.Screen
+        name="Details"
+        component={DetailsScreen}
+        options={({ navigation }) => ({
+          tabBarButton: () => null,
+          headerLeft: () => (
+            <MaterialIcons
+              name="arrow-left"
+              size={50}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        })}
       />
     </Tab.Navigator>
   );
