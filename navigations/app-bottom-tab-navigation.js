@@ -5,9 +5,11 @@ import ProfileScreen from "../screens/ProfileScreen";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   HomeDetailStackNavigation,
+  ProfileStackNavigation,
   ShopDetailStackNavigation,
 } from "./app-stack-navigation";
 import DetailsScreen from "../screens/Details";
+import { StyleSheet } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -63,25 +65,12 @@ function TabNavigation() {
       />
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
-        options={{
+        component={ProfileStackNavigation}
+        options={({ navigation }) => ({
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="person" size={24} color={color} />
           ),
-        }}
-      />
-      <Tab.Screen
-        name="Details"
-        component={DetailsScreen}
-        options={({ navigation }) => ({
-          tabBarButton: () => null,
-          headerLeft: () => (
-            <MaterialIcons
-              name="arrow-left"
-              size={50}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerShown: false,
         })}
       />
     </Tab.Navigator>

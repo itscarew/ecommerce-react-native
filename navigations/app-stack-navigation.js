@@ -6,6 +6,9 @@ import { MyShopInput } from "../components/Input";
 import DetailsScreen from "../screens/Details";
 import { useNavigation } from "@react-navigation/native";
 import ShopScreen from "../screens/ShopScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+import SettingsScreen from "../screens/SettingsScreen";
+import { StyleSheet } from "react-native";
 
 const Stack = createStackNavigator();
 
@@ -74,3 +77,52 @@ export function ShopDetailStackNavigation() {
     </Stack.Navigator>
   );
 }
+
+export function ProfileStackNavigation() {
+  const navigation = useNavigation();
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          height: 80,
+        },
+      }}
+    >
+      <Stack.Screen
+        name="ProfileStack"
+        component={ProfileScreen}
+        options={({ navigation }) => ({
+          headerTitle: "Profile",
+          headerRight: () => (
+            <MaterialIcons
+              name="settings"
+              size={28}
+              onPress={() => navigation.navigate("SettingsStack")}
+              style={styles.headerRightStyle}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="SettingsStack"
+        component={SettingsScreen}
+        options={{
+          headerTitle: "Settings",
+          headerLeft: () => (
+            <MaterialIcons
+              name="arrow-left"
+              size={50}
+              onPress={() => navigation.navigate("ProfileStack")}
+            />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+const styles = StyleSheet.create({
+  headerRightStyle: {
+    marginRight: 20,
+  },
+});

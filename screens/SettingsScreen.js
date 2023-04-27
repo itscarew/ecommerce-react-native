@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Text, Button } from "react-native";
 
-function ProfileScreen({ navigation }) {
+function SettingsScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Profile</Text>
+      <Text>Settings</Text>
     </View>
   );
 }
 
-export default ProfileScreen;
+export default SettingsScreen;
