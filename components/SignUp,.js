@@ -84,12 +84,6 @@ function SignUpComponent({ navigation }) {
                 type="error"
               />
               <View style={{ marginVertical: 10 }}>
-                <Pressable>
-                  <Text style={[{ textAlign: "right", marginBottom: 10 }]}>
-                    Don't have an account ?
-                  </Text>
-                </Pressable>
-
                 <TouchableOpacity
                   style={styles.button1}
                   onPress={props.handleSubmit}
