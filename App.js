@@ -5,6 +5,8 @@ import TabNavigation from "./navigations/app-bottom-tab-navigation";
 import HomeStackNavigation from "./navigations/app-stack-navigation";
 import { useEffect, useState } from "react";
 import { SplashScreenComponent } from "./components/SplashScreen";
+import AppContextProvider from "./contextApi/AppContextProvider";
+import { MainModal } from "./components/Modal";
 
 export default function App() {
   const [show, setShow] = useState(false);
@@ -26,7 +28,10 @@ export default function App() {
         <SplashScreenComponent />
       ) : (
         <NavigationContainer>
-          <TabNavigation />
+          <AppContextProvider>
+            {/* <MainModal /> */}
+            <TabNavigation />
+          </AppContextProvider>
         </NavigationContainer>
       )}
     </>

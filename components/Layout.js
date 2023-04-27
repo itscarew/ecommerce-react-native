@@ -1,5 +1,6 @@
 import { ScrollView } from "react-native";
 import { StyleSheet, View, SafeAreaView } from "react-native";
+import { MainModal } from "./Modal";
 
 export const Layout = ({ children }) => {
   return (

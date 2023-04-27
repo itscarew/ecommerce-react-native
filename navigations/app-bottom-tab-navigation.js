@@ -1,15 +1,12 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CartScreen from "../screens/CartScreen";
-import ProfileScreen from "../screens/ProfileScreen";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   HomeDetailStackNavigation,
   ProfileStackNavigation,
   ShopDetailStackNavigation,
 } from "./app-stack-navigation";
-import DetailsScreen from "../screens/Details";
-import { StyleSheet } from "react-native";
 
 const Tab = createBottomTabNavigator();
 

@@ -26,3 +26,39 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 });
+
+export const BasicTextInput = ({
+  placeholder,
+  name,
+  value,
+  onChangeText,
+  placeholderTextColor,
+  style,
+  ...props
+}) => {
+  return (
+    <TextInput
+      style={[stylesBasic.input, style]}
+      placeholder={placeholder}
+      name={name}
+      value={value}
+      onChangeText={onChangeText}
+      placeholderTextColor={placeholderTextColor || "#8d99ae"}
+      {...props}
+    />
+  );
+};
+
+const stylesBasic = StyleSheet.create({
+  input: {
+    backgroundColor: "#fff",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    fontSize: 16,
+    marginVertical: 5,
+    borderColor: "#000",
+    color: "#000",
+    borderBottomWidth: 0.6,
+    width: "100%",
+  },
+});
