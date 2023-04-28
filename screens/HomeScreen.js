@@ -1,11 +1,17 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import React, { useContext, useEffect } from "react";
+import { StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import { View, Text, Button, Image } from "react-native";
 import { Layout } from "../components/Layout";
 import { ProductCard } from "../components/ProductCard";
+import AppContext from "../contextApi/AppContext";
 
 function HomeScreen({ navigation }) {
+  const { productState } = useContext(AppContext);
+  useEffect(() => {
+    productState.getProducts();
+  }, []);
+
   return (
     <Layout>
       <View>
@@ -20,9 +26,15 @@ function HomeScreen({ navigation }) {
           <Text style={styles.text2}>Shop on MyShop</Text>
         </View>
 
-        <View style={styles.cardContainer}>
-          <ProductCard screen={"DetailsStack"} />
-        </View>
+        <FlatList
+          data={productState.products}
+          renderItem={({ item }) => {
+            return <ProductCard product={item} screen={"DetailsStack"} />;
+          }}
+          keyExtractor={(item) => item?._id.toString()}
+          scrollEnabled={false}
+          numColumns={2}
+        />
 
         <TouchableOpacity
           onPress={() => navigation.navigate("Shop")}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,9 +7,25 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import { ProductApi } from "../api/api";
 import { Layout } from "../components/Layout";
 
-function DetailsScreen({ navigation }) {
+function DetailsScreen({ route }) {
+  const { id } = route.params;
+
+  const [product, setProduct] = useState();
+  const getOneProduct = async () => {
+    try {
+      const res = await ProductApi.get(`/${id}`);
+      setProduct(res?.data?.data);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    getOneProduct();
+  }, []);
   return (
     <Layout>
       <View>
@@ -20,17 +36,11 @@ function DetailsScreen({ navigation }) {
           }}
         />
         <View style={styles.textContainer}>
-          <Text style={styles.text1}>
-            Mens Casual Premium Slim Fit T-Shirts
-          </Text>
-          <Text style={styles.text2}>$22.30</Text>
-          <Text style={styles.text3}>
-            Slim-fitting style, contrast raglan long sleeve, three-button henley
-            placket, light weight & soft fabric for breathable and comfortable
-            wearing.
-          </Text>
-          <Text style={styles.text4}>Category: Men</Text>
-          <Text style={styles.text5}>Rating: 4.1</Text>
+          <Text style={styles.text1}>{product?.name}</Text>
+          <Text style={styles.text2}>${product?.price} </Text>
+          <Text style={styles.text3}>{product?.description}</Text>
+          <Text style={styles.text4}>Category: {product?.category} </Text>
+          <Text style={styles.text5}>Rating: {product?.rating} </Text>
         </View>
 
         <TouchableOpacity style={styles.button}>
