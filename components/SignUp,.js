@@ -2,15 +2,26 @@ import { Formik } from "formik";
 import React, { useContext } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native";
-import { View, Text, Button } from "react-native";
+import { View, Text, Alert } from "react-native";
 import AppContext from "../contextApi/AppContext";
 import { AlertMessage } from "./Alert";
 import { BasicTextInput } from "./Input";
 import { Layout } from "./Layout";
 import { signInSchema, signUpSchema } from "../utils/validationSchema";
+import { UserApi } from "../api/api";
 
 function SignUpComponent({ navigation }) {
   const { buttonComponentState, modalState } = useContext(AppContext);
+
+  const signUp = async (values) => {
+    try {
+      const res = await UserApi.post(`/signup`, values);
+      Alert.alert("MyShop", res.data.message, [{ text: "OK" }]);
+    } catch (error) {
+      throw error;
+    }
+  };
+
   return (
     <View
       style={{
@@ -26,8 +37,8 @@ function SignUpComponent({ navigation }) {
       <Formik
         initialValues={{ firstName: "", lastName: "", email: "", password: "" }}
         validationSchema={signUpSchema}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={async (values) => {
+          await signUp(values);
           modalState.closeModal();
           buttonComponentState.setButtonComponent("SignIn");
           modalState.openModal();

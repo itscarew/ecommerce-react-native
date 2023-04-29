@@ -32,7 +32,7 @@ function DetailsScreen({ route }) {
         <Image
           style={styles.image}
           source={{
-            uri: "https://images.pexels.com/photos/9489161/pexels-photo-9489161.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            uri: "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           }}
         />
         <View style={styles.textContainer}>

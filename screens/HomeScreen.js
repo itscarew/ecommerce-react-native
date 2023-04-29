@@ -18,7 +18,7 @@ function HomeScreen({ navigation }) {
         <Image
           style={styles.image}
           source={{
-            uri: "https://images.pexels.com/photos/9489161/pexels-photo-9489161.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            uri: "https://images.pexels.com/photos/4611700/pexels-photo-4611700.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           }}
         />
         <View style={styles.textContainer}>
@@ -27,7 +27,7 @@ function HomeScreen({ navigation }) {
         </View>
 
         <FlatList
-          data={productState.products}
+          data={productState.products.slice(0, 4)}
           renderItem={({ item }) => {
             return <ProductCard product={item} screen={"DetailsStack"} />;
           }}
@@ -45,9 +45,9 @@ function HomeScreen({ navigation }) {
         </TouchableOpacity>
 
         <Image
-          style={styles.image}
+          style={[styles.image, { marginBottom: 20 }]}
           source={{
-            uri: "https://images.pexels.com/photos/16248150/pexels-photo-16248150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            uri: "https://images.pexels.com/photos/6311678/pexels-photo-6311678.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           }}
         />
       </View>

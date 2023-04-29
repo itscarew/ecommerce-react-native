@@ -2,15 +2,26 @@ import { Formik } from "formik";
 import React, { useContext } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, Alert } from "react-native";
+import { UserApi } from "../api/api";
 import AppContext from "../contextApi/AppContext";
 import { signInSchema } from "../utils/validationSchema";
 import { AlertMessage } from "./Alert";
 import { BasicTextInput } from "./Input";
 import { Layout } from "./Layout";
 
-function SignInComponent({ navigation }) {
+function SignInComponent() {
   const { modalState } = useContext(AppContext);
+
+  const signIn = async (values) => {
+    try {
+      const res = await UserApi.post(`/signin`, values);
+      Alert.alert("MyShop", res.data.message, [{ text: "OK" }]);
+    } catch (error) {
+      throw error;
+    }
+  };
+
   return (
     <View
       style={{
@@ -27,7 +38,11 @@ function SignInComponent({ navigation }) {
         initialValues={{ identifier: "", password: "" }}
         validationSchema={signInSchema}
         onSubmit={(values) => {
-          console.log(values);
+          const newValues = {
+            email: values.identifier,
+            password: values.password,
+          };
+          signIn(newValues);
           modalState.closeModal();
         }}
       >

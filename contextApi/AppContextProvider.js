@@ -5,6 +5,7 @@ import AppContext from "./AppContext";
 const AppContextProvider = ({ children }) => {
   const [modal, showModal] = useState(false);
   const [buttonComponent, setButtonComponent] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const openModal = () => {
     showModal(true);
@@ -27,9 +28,12 @@ const AppContextProvider = ({ children }) => {
   const [categoryProducts, setCategoryProducts] = useState([]);
   const getCategoryProducts = async (category) => {
     try {
+      setLoading(true);
       const res = await ProductApi.get(`/category/${category}`);
       setCategoryProducts(res?.data?.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       throw error;
     }
   };
@@ -43,6 +47,7 @@ const AppContextProvider = ({ children }) => {
       categoryProducts,
       getCategoryProducts,
     },
+    loaderState: { loading },
   };
 
   return <AppContext.Provider value={state}>{children}</AppContext.Provider>;

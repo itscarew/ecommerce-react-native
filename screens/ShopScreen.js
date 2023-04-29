@@ -4,11 +4,12 @@ import { View, useWindowDimensions, StyleSheet } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { Layout } from "../components/Layout";
 import { ProductCard } from "../components/ProductCard";
+import { Loader } from "../components/Spinner";
 import AppContext from "../contextApi/AppContext";
 
 function ShopScreen({ navigation }) {
   const layout = useWindowDimensions();
-
+  const { productState, loaderState } = useContext(AppContext);
   const data = [
     { key: "men", title: "Men" },
     { key: "women", title: "Women" },
@@ -20,35 +21,30 @@ function ShopScreen({ navigation }) {
   const [index, setIndex] = useState(0);
   const [routes] = useState(data);
   const [tabKey, setTabKey] = useState(routes[index].key);
-  const [loading, setLoading] = useState(true);
 
   const renderScene = SceneMap(
     data.reduce((acc, { key }) => {
       acc[key] = () => {
-        if (loading) {
+        if (!loaderState.loading) {
           return (
-            <Layout style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color="#606c38" />
-            </Layout>
+            <>
+              <Layout>
+                <View style={styles.cardContainer}>
+                  {productState.categoryProducts.map((item) => {
+                    return (
+                      <ProductCard
+                        key={item._id}
+                        product={item}
+                        screen={"DetailsStack"}
+                      />
+                    );
+                  })}
+                </View>
+              </Layout>
+            </>
           );
         }
-        return (
-          <>
-            <Layout>
-              <View style={styles.cardContainer}>
-                {productState.categoryProducts.map((item) => {
-                  return (
-                    <ProductCard
-                      key={item._id}
-                      product={item}
-                      screen={"DetailsStack"}
-                    />
-                  );
-                })}
-              </View>
-            </Layout>
-          </>
-        );
+        return <Loader />;
       };
       return acc;
     }, {})
@@ -64,10 +60,8 @@ function ShopScreen({ navigation }) {
     />
   );
 
-  const { productState } = useContext(AppContext);
   useEffect(() => {
     productState.getCategoryProducts(tabKey);
-    setLoading(false);
   }, [index, tabKey]);
 
   const handleIndexChange = (newIndex) => {
@@ -82,6 +76,7 @@ function ShopScreen({ navigation }) {
       renderTabBar={renderTabBar}
       onIndexChange={handleIndexChange}
       initialLayout={{ width: layout.width }}
+      lazy={true}
     />
   );
 }
