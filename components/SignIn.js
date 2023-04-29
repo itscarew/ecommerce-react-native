@@ -4,10 +4,10 @@ import { Pressable, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { View, Text, Button } from "react-native";
 import AppContext from "../contextApi/AppContext";
+import { signInSchema } from "../utils/validationSchema";
 import { AlertMessage } from "./Alert";
 import { BasicTextInput } from "./Input";
 import { Layout } from "./Layout";
-import { signInSchema } from "./utils/validationSchema";
 
 function SignInComponent({ navigation }) {
   const { modalState } = useContext(AppContext);

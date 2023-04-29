@@ -24,10 +24,25 @@ const AppContextProvider = ({ children }) => {
     }
   };
 
+  const [categoryProducts, setCategoryProducts] = useState([]);
+  const getCategoryProducts = async (category) => {
+    try {
+      const res = await ProductApi.get(`/category/${category}`);
+      setCategoryProducts(res?.data?.data);
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const state = {
     modalState: { modal, openModal, closeModal },
     buttonComponentState: { buttonComponent, setButtonComponent },
-    productState: { products, getProducts },
+    productState: {
+      products,
+      getProducts,
+      categoryProducts,
+      getCategoryProducts,
+    },
   };
 
   return <AppContext.Provider value={state}>{children}</AppContext.Provider>;

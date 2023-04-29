@@ -7,7 +7,7 @@ import AppContext from "../contextApi/AppContext";
 import { AlertMessage } from "./Alert";
 import { BasicTextInput } from "./Input";
 import { Layout } from "./Layout";
-import { signInSchema, signUpSchema } from "./utils/validationSchema";
+import { signInSchema, signUpSchema } from "../utils/validationSchema";
 
 function SignUpComponent({ navigation }) {
   const { buttonComponentState, modalState } = useContext(AppContext);

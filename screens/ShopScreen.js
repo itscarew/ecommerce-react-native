@@ -1,64 +1,58 @@
-import React from "react";
-import {
-  View,
-  Text,
-  Button,
-  useWindowDimensions,
-  StyleSheet,
-} from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { ActivityIndicator } from "react-native";
+import { View, useWindowDimensions, StyleSheet } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { Layout } from "../components/Layout";
 import { ProductCard } from "../components/ProductCard";
+import AppContext from "../contextApi/AppContext";
 
 function ShopScreen({ navigation }) {
   const layout = useWindowDimensions();
 
-  const FirstRoute = () => (
-    <Layout>
-      <View style={styles.cardContainer}>
-        <ProductCard screen={"DetailsStack"} />
-      </View>
-    </Layout>
-  );
-
-  const SecondRoute = () => (
-    <Layout>
-      <View style={styles.cardContainer}>
-        <ProductCard screen={"DetailsStack"} />
-      </View>
-    </Layout>
-  );
-
-  const ThirdRoute = () => (
-    <Layout>
-      <View style={styles.cardContainer}>
-        <ProductCard screen={"DetailsStack"} />
-      </View>
-    </Layout>
-  );
-
-  const FourthRoute = () => (
-    <Layout>
-      <View style={styles.cardContainer}>
-        <ProductCard screen={"DetailsStack"} />
-      </View>
-    </Layout>
-  );
-
-  const renderScene = SceneMap({
-    men: FirstRoute,
-    women: SecondRoute,
-    jewelry: ThirdRoute,
-    electronics: FourthRoute,
-  });
-
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
+  const data = [
     { key: "men", title: "Men" },
     { key: "women", title: "Women" },
     { key: "jewelry", title: "Jewelry" },
     { key: "electronics", title: "Electronics" },
-  ]);
+    { key: "sports", title: "Sports" },
+  ];
+
+  const [index, setIndex] = useState(0);
+  const [routes] = useState(data);
+  const [tabKey, setTabKey] = useState(routes[index].key);
+  const [loading, setLoading] = useState(true);
+
+  const renderScene = SceneMap(
+    data.reduce((acc, { key }) => {
+      acc[key] = () => {
+        if (loading) {
+          return (
+            <Layout style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#606c38" />
+            </Layout>
+          );
+        }
+        return (
+          <>
+            <Layout>
+              <View style={styles.cardContainer}>
+                {productState.categoryProducts.map((item) => {
+                  return (
+                    <ProductCard
+                      key={item._id}
+                      product={item}
+                      screen={"DetailsStack"}
+                    />
+                  );
+                })}
+              </View>
+            </Layout>
+          </>
+        );
+      };
+      return acc;
+    }, {})
+  );
 
   const renderTabBar = (props) => (
     <TabBar
@@ -70,12 +64,23 @@ function ShopScreen({ navigation }) {
     />
   );
 
+  const { productState } = useContext(AppContext);
+  useEffect(() => {
+    productState.getCategoryProducts(tabKey);
+    setLoading(false);
+  }, [index, tabKey]);
+
+  const handleIndexChange = (newIndex) => {
+    setIndex(newIndex);
+    setTabKey(routes[newIndex].key);
+  };
+
   return (
     <TabView
       navigationState={{ index, routes }}
       renderScene={renderScene}
       renderTabBar={renderTabBar}
-      onIndexChange={setIndex}
+      onIndexChange={handleIndexChange}
       initialLayout={{ width: layout.width }}
     />
   );
