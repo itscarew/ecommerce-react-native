@@ -9,9 +9,13 @@ import { StyleSheet, View, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Modal } from "react-native";
 import { MyImage } from "./MyImage";
+import AppContext from "../contextApi/AppContext";
+import { useContext } from "react";
 
 export const ProductCard = ({ product, screen }) => {
   const navigation = useNavigation();
+
+  const { modalState, cartState, userState } = useContext(AppContext);
   return (
     <>
       <Pressable
@@ -30,7 +34,10 @@ export const ProductCard = ({ product, screen }) => {
         <Text style={{ fontWeight: "800", marginVertical: 5 }}>
           $ {product?.price}
         </Text>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => cartState.addToCart(product?._id)}
+        >
           <Text style={styles.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
       </Pressable>

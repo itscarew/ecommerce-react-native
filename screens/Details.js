@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -9,8 +9,10 @@ import {
 } from "react-native";
 import { ProductApi } from "../api/api";
 import { Layout } from "../components/Layout";
+import AppContext from "../contextApi/AppContext";
 
 function DetailsScreen({ route }) {
+  const { modalState, cartState, userState } = useContext(AppContext);
   const { id } = route.params;
 
   const [product, setProduct] = useState();
@@ -43,7 +45,10 @@ function DetailsScreen({ route }) {
           <Text style={styles.text5}>Rating: {product?.rating} </Text>
         </View>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => cartState.addToCart(product?._id)}
+        >
           <Text style={styles.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
       </View>

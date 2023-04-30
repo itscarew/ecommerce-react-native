@@ -7,9 +7,10 @@ import { ProductCard } from "../components/ProductCard";
 import AppContext from "../contextApi/AppContext";
 
 function HomeScreen({ navigation }) {
-  const { productState } = useContext(AppContext);
+  const { productState, cartState } = useContext(AppContext);
   useEffect(() => {
     productState.getProducts();
+    cartState.getUserCarts();
   }, []);
 
   return (

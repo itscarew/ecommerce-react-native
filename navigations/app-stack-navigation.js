@@ -9,6 +9,7 @@ import ShopScreen from "../screens/ShopScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import { StyleSheet } from "react-native";
+import CartScreen from "../screens/CartScreen";
 
 const Stack = createStackNavigator();
 
@@ -59,6 +60,39 @@ export function ShopDetailStackNavigation() {
         name="ShopStack"
         component={ShopScreen}
         options={{ headerTitle: () => <MyShopInput /> }}
+      />
+      <Stack.Screen
+        name="DetailsStack"
+        component={DetailsScreen}
+        options={{
+          headerTitle: "",
+          headerLeft: () => (
+            <MaterialIcons
+              name="arrow-left"
+              size={50}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+export function CartDetailStackNavigation() {
+  const navigation = useNavigation();
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          height: 80,
+        },
+      }}
+    >
+      <Stack.Screen
+        name="CartStack"
+        component={CartScreen}
+        options={{ title: "Cart" }}
       />
       <Stack.Screen
         name="DetailsStack"

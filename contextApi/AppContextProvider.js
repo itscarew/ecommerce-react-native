@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { ProductApi } from "../api/api";
+import { CartApi, ProductApi } from "../api/api";
 import AppContext from "./AppContext";
 
 const AppContextProvider = ({ children }) => {
   const [modal, showModal] = useState(false);
   const [buttonComponent, setButtonComponent] = useState("");
   const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState();
+  const [token, setToken] = useState("");
 
   const openModal = () => {
     showModal(true);
@@ -38,6 +40,43 @@ const AppContextProvider = ({ children }) => {
     }
   };
 
+  const [carts, setCarts] = useState([]);
+  const getUserCarts = async () => {
+    try {
+      setLoading(true);
+      const res = await CartApi.get(
+        `/user/${userData?._id || "6427678669827d1ee7162600"}`
+      );
+      setCarts(res?.data?.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      throw error;
+    }
+  };
+
+  const addToCart = async (productId) => {
+    try {
+      // setLoading(true);
+      await CartApi.patch(`/myuser/${carts[0]?._id}/${productId}`);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      throw error;
+    }
+  };
+
+  const removeFromCart = async (productId) => {
+    try {
+      // setLoading(true);
+      await CartApi.delete(`/myuser/${carts[0]?._id}/${productId}`);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      throw error;
+    }
+  };
+
   const state = {
     modalState: { modal, openModal, closeModal },
     buttonComponentState: { buttonComponent, setButtonComponent },
@@ -48,6 +87,8 @@ const AppContextProvider = ({ children }) => {
       getCategoryProducts,
     },
     loaderState: { loading },
+    userState: { userData, setUserData, token, setToken },
+    cartState: { carts, getUserCarts, removeFromCart, addToCart },
   };
 
   return <AppContext.Provider value={state}>{children}</AppContext.Provider>;

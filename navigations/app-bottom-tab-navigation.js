@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CartScreen from "../screens/CartScreen";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
+  CartDetailStackNavigation,
   HomeDetailStackNavigation,
   ProfileStackNavigation,
   ShopDetailStackNavigation,
@@ -53,11 +54,12 @@ function TabNavigation() {
       />
       <Tab.Screen
         name="Cart"
-        component={CartScreen}
+        component={CartDetailStackNavigation}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="shopping-cart" size={24} color={color} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
