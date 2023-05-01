@@ -1,21 +1,20 @@
-import { MaterialIcons } from "@expo/vector-icons";
-import { Image } from "react-native";
-import { Touchable } from "react-native";
-import { Pressable } from "react-native";
-import { TouchableOpacity } from "react-native";
-import { Text } from "react-native";
-import { ScrollView, TextInput } from "react-native";
-import { StyleSheet, View, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Modal } from "react-native";
-import { MyImage } from "./MyImage";
-import AppContext from "../contextApi/AppContext";
 import { useContext } from "react";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import AppContext from "../contextApi/AppContext";
+import { CartActionButton } from "./CartActionButton";
+import { MyImage } from "./MyImage";
 
 export const ProductCard = ({ product, screen }) => {
   const navigation = useNavigation();
 
-  const { modalState, cartState, userState } = useContext(AppContext);
+  const { cartState } = useContext(AppContext);
   return (
     <>
       <Pressable
@@ -34,12 +33,22 @@ export const ProductCard = ({ product, screen }) => {
         <Text style={{ fontWeight: "800", marginVertical: 5 }}>
           $ {product?.price}
         </Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => cartState.addToCart(product?._id)}
-        >
-          <Text style={styles.buttonText}>Add to Cart</Text>
-        </TouchableOpacity>
+        {cartState.checkInCart(product?._id) ? (
+          <CartActionButton
+            quantity={cartState.checkInCart(product._id)?.quantity}
+            product={product}
+          />
+        ) : (
+          <TouchableOpacity
+            style={styles.button}
+            onPress={async () => {
+              await cartState.addToCart(product?._id);
+              await cartState.getUserCarts();
+            }}
+          >
+            <Text style={styles.buttonText}>Add to Cart</Text>
+          </TouchableOpacity>
+        )}
       </Pressable>
     </>
   );

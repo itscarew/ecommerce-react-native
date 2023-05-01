@@ -1,15 +1,15 @@
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import HomeScreen from "../screens/HomeScreen";
 import { MaterialIcons } from "@expo/vector-icons";
-import { MyShopInput } from "../components/Input";
-import DetailsScreen from "../screens/Details";
 import { useNavigation } from "@react-navigation/native";
-import ShopScreen from "../screens/ShopScreen";
+import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
+import { StyleSheet } from "react-native";
+import { MyShopInput } from "../components/Input";
+import CartScreen from "../screens/CartScreen";
+import DetailsScreen from "../screens/Details";
+import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import SettingsScreen from "../screens/SettingsScreen";
-import { StyleSheet } from "react-native";
-import CartScreen from "../screens/CartScreen";
+import ShopScreen from "../screens/ShopScreen";
 
 const Stack = createStackNavigator();
 

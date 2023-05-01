@@ -1,18 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  Button,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ProductApi } from "../api/api";
+import { CartActionButton } from "../components/CartActionButton";
 import { Layout } from "../components/Layout";
 import AppContext from "../contextApi/AppContext";
 
 function DetailsScreen({ route }) {
-  const { modalState, cartState, userState } = useContext(AppContext);
+  const { cartState } = useContext(AppContext);
   const { id } = route.params;
 
   const [product, setProduct] = useState();
@@ -45,12 +39,24 @@ function DetailsScreen({ route }) {
           <Text style={styles.text5}>Rating: {product?.rating} </Text>
         </View>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => cartState.addToCart(product?._id)}
-        >
-          <Text style={styles.buttonText}>Add to Cart</Text>
-        </TouchableOpacity>
+        {cartState.checkInCart(product?._id) ? (
+          <View style={{ marginBottom: 50 }}>
+            <CartActionButton
+              quantity={cartState.checkInCart(product._id)?.quantity}
+              product={product}
+            />
+          </View>
+        ) : (
+          <TouchableOpacity
+            style={styles.button}
+            onPress={async () => {
+              await cartState.addToCart(product?._id);
+              await cartState.getUserCarts();
+            }}
+          >
+            <Text style={styles.buttonText}>Add to Cart</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </Layout>
   );
@@ -93,7 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#606c38",
     alignItems: "center",
     justifyContent: "center",
-    height: 50,
+    height: 40,
     marginBottom: 50,
   },
   buttonText: {

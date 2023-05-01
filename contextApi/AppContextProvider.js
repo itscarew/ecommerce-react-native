@@ -57,8 +57,19 @@ const AppContextProvider = ({ children }) => {
 
   const addToCart = async (productId) => {
     try {
-      // setLoading(true);
+      setLoading(true);
       await CartApi.patch(`/myuser/${carts[0]?._id}/${productId}`);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      throw error;
+    }
+  };
+
+  const deductQuantityFromCart = async (productId) => {
+    try {
+      setLoading(true);
+      await CartApi.patch(`/myuser/${carts[0]?._id}/${productId}/deduct`);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -68,13 +79,20 @@ const AppContextProvider = ({ children }) => {
 
   const removeFromCart = async (productId) => {
     try {
-      // setLoading(true);
+      setLoading(true);
       await CartApi.delete(`/myuser/${carts[0]?._id}/${productId}`);
       setLoading(false);
     } catch (error) {
       setLoading(false);
       throw error;
     }
+  };
+
+  const checkInCart = (id) => {
+    const check = carts[0]?.products?.find((product) => {
+      return product?.productId?._id === id;
+    });
+    return check;
   };
 
   const state = {
@@ -88,7 +106,14 @@ const AppContextProvider = ({ children }) => {
     },
     loaderState: { loading },
     userState: { userData, setUserData, token, setToken },
-    cartState: { carts, getUserCarts, removeFromCart, addToCart },
+    cartState: {
+      carts,
+      getUserCarts,
+      removeFromCart,
+      addToCart,
+      checkInCart,
+      deductQuantityFromCart,
+    },
   };
 
   return <AppContext.Provider value={state}>{children}</AppContext.Provider>;

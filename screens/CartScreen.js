@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
-import { View, Text, Button } from "react-native";
+import React, { useContext, useEffect } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { CartCard } from "../components/CartCard";
 import { Layout } from "../components/Layout";
 import { MainModal } from "../components/Modal";
@@ -21,6 +20,11 @@ function CartScreen({ navigation }) {
   }, []);
 
   // console.log(cartState.carts[0], "jgo");
+
+  const count = cartState.carts[0]?.products?.reduce((acc, curr) => {
+    acc[curr?._id] = acc[curr?._id] ? acc[curr._id] + 1 : 1;
+    return acc;
+  }, {});
 
   return (
     <>
@@ -68,7 +72,7 @@ function CartScreen({ navigation }) {
           </View>
         ) : (
           <>
-            {cartState.carts[0]?.products.length > 0 ? (
+            {cartState.carts[0]?.products?.length > 0 ? (
               <>
                 <View
                   style={{
@@ -86,8 +90,9 @@ function CartScreen({ navigation }) {
                     return (
                       <CartCard
                         key={item._id}
-                        product={item}
+                        product={item.productId}
                         screen={"DetailsStack"}
+                        quantity={item.quantity}
                       />
                     );
                   })}

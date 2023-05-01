@@ -1,6 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { ScrollView, TextInput } from "react-native";
-import { StyleSheet, View, SafeAreaView } from "react-native";
+import { TextInput } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export const MyShopInput = ({ children }) => {
   return (

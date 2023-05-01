@@ -1,5 +1,4 @@
-import { ScrollView } from "react-native";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 export const SplashScreenComponent = () => {
   return (

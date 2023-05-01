@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { Text, View } from "react-native";
 
 function ProfileScreen({ navigation }) {
   return (

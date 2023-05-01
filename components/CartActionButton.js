@@ -1,17 +1,35 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { StyleSheet, View, SafeAreaView, Text } from "react-native";
+import { useContext } from "react";
+import { StyleSheet, View, Text } from "react-native";
+import AppContext from "../contextApi/AppContext";
 
-export const CartActionButton = ({ children }) => {
+export const CartActionButton = ({ quantity, product }) => {
+  const { cartState } = useContext(AppContext);
+
   return (
     <View style={styles.container}>
       <View style={styles.one}>
-        <MaterialIcons name="remove" size={20} onPress={async () => {}} />
+        <MaterialIcons
+          name="remove"
+          size={20}
+          onPress={async () => {
+            await cartState.deductQuantityFromCart(product?._id);
+            await cartState.getUserCarts();
+          }}
+        />
       </View>
       <View style={styles.one}>
-        <Text>5</Text>
+        <Text>{quantity}</Text>
       </View>
       <View style={styles.three}>
-        <MaterialIcons name="add" size={20} onPress={async () => {}} />
+        <MaterialIcons
+          name="add"
+          size={20}
+          onPress={async () => {
+            await cartState.addToCart(product?._id);
+            await cartState.getUserCarts();
+          }}
+        />
       </View>
     </View>
   );
@@ -24,7 +42,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#000",
     height: 40,
-    marginVertical: 5,
   },
   one: {
     width: "33%",

@@ -1,21 +1,17 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { Image } from "react-native";
-import { Touchable } from "react-native";
 import { Pressable } from "react-native";
-import { TouchableOpacity } from "react-native";
 import { Text } from "react-native";
-import { ScrollView, TextInput } from "react-native";
-import { StyleSheet, View, SafeAreaView } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Modal } from "react-native";
 import { MyImage } from "./MyImage";
 import AppContext from "../contextApi/AppContext";
 import { useContext } from "react";
 import { CartActionButton } from "./CartActionButton";
 
-export const CartCard = ({ product, screen }) => {
+export const CartCard = ({ product, screen, quantity }) => {
   const navigation = useNavigation();
-  const { modalState, cartState, userState } = useContext(AppContext);
+  const { cartState } = useContext(AppContext);
+
   return (
     <Pressable
       style={styles.card}
@@ -43,7 +39,7 @@ export const CartCard = ({ product, screen }) => {
         </View>
         <View style={styles.titleRating}>
           <Text style={styles.title}>{product?.name}</Text>
-          <CartActionButton />
+          <CartActionButton quantity={quantity} product={product} />
         </View>
       </View>
       <View style={{ width: "15%" }}>
@@ -81,7 +77,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   title: {
-    marginVertical: 10,
+    marginVertical: 15,
     fontSize: 14,
   },
   button: {

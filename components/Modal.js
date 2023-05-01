@@ -1,7 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useContext } from "react";
-import { Modal } from "react-native";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { Modal, SafeAreaView, StyleSheet } from "react-native";
 import AppContext from "../contextApi/AppContext";
 
 export const MainModal = ({ children }) => {

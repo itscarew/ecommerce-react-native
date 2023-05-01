@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ActivityIndicator } from "react-native";
-import { View, useWindowDimensions, StyleSheet } from "react-native";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
+import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { Layout } from "../components/Layout";
 import { ProductCard } from "../components/ProductCard";
 import { Loader } from "../components/Spinner";

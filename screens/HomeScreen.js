@@ -1,7 +1,13 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useContext, useEffect } from "react";
-import { StyleSheet, TouchableOpacity, FlatList } from "react-native";
-import { View, Text, Button, Image } from "react-native";
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Layout } from "../components/Layout";
 import { ProductCard } from "../components/ProductCard";
 import AppContext from "../contextApi/AppContext";
