@@ -12,6 +12,10 @@ export const CartCard = ({ product, screen, quantity }) => {
   const navigation = useNavigation();
   const { cartState } = useContext(AppContext);
 
+  const eachProductTotalAmount = (price, quantity = 1) => {
+    return price * quantity;
+  };
+
   return (
     <Pressable
       style={styles.card}
@@ -31,7 +35,7 @@ export const CartCard = ({ product, screen, quantity }) => {
           flexDirection: "row",
           alignItems: "flex-start",
           position: "relative",
-          width: "70%",
+          width: "65%",
         }}
       >
         <View>
@@ -51,7 +55,7 @@ export const CartCard = ({ product, screen, quantity }) => {
             textAlign: "right",
           }}
         >
-          ${product?.price}
+          ${eachProductTotalAmount(product?.price, quantity)}
         </Text>
       </View>
     </Pressable>

@@ -1,6 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useContext } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import AppContext from "../contextApi/AppContext";
 
 export const CartActionButton = ({ quantity, product }) => {
@@ -8,29 +8,27 @@ export const CartActionButton = ({ quantity, product }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.one}>
-        <MaterialIcons
-          name="remove"
-          size={20}
-          onPress={async () => {
-            await cartState.deductQuantityFromCart(product?._id);
-            await cartState.getUserCarts();
-          }}
-        />
-      </View>
-      <View style={styles.one}>
+      <TouchableOpacity
+        style={styles.one}
+        onPress={async () => {
+          await cartState.deductQuantityFromCart(product?._id);
+          await cartState.getUserCarts();
+        }}
+      >
+        <MaterialIcons name="remove" size={20} />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.one}>
         <Text>{quantity}</Text>
-      </View>
-      <View style={styles.three}>
-        <MaterialIcons
-          name="add"
-          size={20}
-          onPress={async () => {
-            await cartState.addToCart(product?._id);
-            await cartState.getUserCarts();
-          }}
-        />
-      </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.three}
+        onPress={async () => {
+          await cartState.addToCart(product?._id);
+          await cartState.getUserCarts();
+        }}
+      >
+        <MaterialIcons name="add" size={20} />
+      </TouchableOpacity>
     </View>
   );
 };

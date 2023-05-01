@@ -19,12 +19,13 @@ function CartScreen({ navigation }) {
     return unsubscribe;
   }, []);
 
-  // console.log(cartState.carts[0], "jgo");
-
-  const count = cartState.carts[0]?.products?.reduce((acc, curr) => {
-    acc[curr?._id] = acc[curr?._id] ? acc[curr._id] + 1 : 1;
-    return acc;
-  }, {});
+  const subTotal = cartState.carts[0]?.products?.reduce(function (
+    accumulator,
+    currentValue
+  ) {
+    return accumulator + currentValue?.productId.price * currentValue?.quantity;
+  },
+  0);
 
   return (
     <>
@@ -109,7 +110,9 @@ function CartScreen({ navigation }) {
                     <Text style={{ fontSize: 16, fontWeight: 700 }}>
                       Subtotal
                     </Text>
-                    <Text style={{ fontSize: 16, fontWeight: 700 }}>$3000</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 700 }}>
+                      ${subTotal || 0}
+                    </Text>
                   </View>
                   <View
                     style={{

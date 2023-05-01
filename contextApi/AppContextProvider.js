@@ -4,6 +4,7 @@ import AppContext from "./AppContext";
 
 const AppContextProvider = ({ children }) => {
   const [modal, showModal] = useState(false);
+  const [cartModal, showCartModal] = useState(false);
   const [buttonComponent, setButtonComponent] = useState("");
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState();
@@ -12,9 +13,14 @@ const AppContextProvider = ({ children }) => {
   const openModal = () => {
     showModal(true);
   };
-
   const closeModal = () => {
     showModal(false);
+  };
+  const openCartModal = () => {
+    showCartModal(true);
+  };
+  const closeCartModal = () => {
+    showCartModal(false);
   };
 
   const [products, setProducts] = useState([]);
@@ -96,7 +102,14 @@ const AppContextProvider = ({ children }) => {
   };
 
   const state = {
-    modalState: { modal, openModal, closeModal },
+    modalState: {
+      modal,
+      cartModal,
+      openModal,
+      closeModal,
+      openCartModal,
+      closeCartModal,
+    },
     buttonComponentState: { buttonComponent, setButtonComponent },
     productState: {
       products,

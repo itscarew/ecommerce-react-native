@@ -1,6 +1,8 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
+import { View } from "react-native";
+import { CartIcon } from "../components/CartIcon";
 import {
   CartDetailStackNavigation,
   HomeDetailStackNavigation,
@@ -55,9 +57,7 @@ function TabNavigation() {
         name="Cart"
         component={CartDetailStackNavigation}
         options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="shopping-cart" size={24} color={color} />
-          ),
+          tabBarIcon: ({ color }) => <CartIcon color={color} />,
           headerShown: false,
         }}
       />

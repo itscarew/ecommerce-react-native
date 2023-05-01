@@ -14,7 +14,7 @@ import { MyImage } from "./MyImage";
 export const ProductCard = ({ product, screen }) => {
   const navigation = useNavigation();
 
-  const { cartState } = useContext(AppContext);
+  const { cartState, modalState } = useContext(AppContext);
   return (
     <>
       <Pressable
@@ -44,6 +44,7 @@ export const ProductCard = ({ product, screen }) => {
             onPress={async () => {
               await cartState.addToCart(product?._id);
               await cartState.getUserCarts();
+              modalState.openCartModal();
             }}
           >
             <Text style={styles.buttonText}>Add to Cart</Text>

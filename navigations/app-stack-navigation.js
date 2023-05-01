@@ -26,20 +26,17 @@ export function HomeDetailStackNavigation() {
       <Stack.Screen
         name="HomeStack"
         component={HomeScreen}
-        options={{ headerTitle: () => <MyShopInput /> }}
+        options={{
+          headerTitle: () => <MyShopInput />,
+          title: "MyShop",
+        }}
       />
       <Stack.Screen
         name="DetailsStack"
         component={DetailsScreen}
         options={{
           headerTitle: "",
-          headerLeft: () => (
-            <MaterialIcons
-              name="arrow-left"
-              size={50}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerTintColor: "#000",
         }}
       />
     </Stack.Navigator>
@@ -59,20 +56,14 @@ export function ShopDetailStackNavigation() {
       <Stack.Screen
         name="ShopStack"
         component={ShopScreen}
-        options={{ headerTitle: () => <MyShopInput /> }}
+        options={{ headerTitle: () => <MyShopInput />, title: "Shop" }}
       />
       <Stack.Screen
         name="DetailsStack"
         component={DetailsScreen}
         options={{
           headerTitle: "",
-          headerLeft: () => (
-            <MaterialIcons
-              name="arrow-left"
-              size={50}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerTintColor: "#000",
         }}
       />
     </Stack.Navigator>
@@ -99,13 +90,7 @@ export function CartDetailStackNavigation() {
         component={DetailsScreen}
         options={{
           headerTitle: "",
-          headerLeft: () => (
-            <MaterialIcons
-              name="arrow-left"
-              size={50}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerTintColor: "#000",
         }}
       />
     </Stack.Navigator>
@@ -142,13 +127,7 @@ export function ProfileStackNavigation() {
         component={SettingsScreen}
         options={{
           headerTitle: "Settings",
-          headerLeft: () => (
-            <MaterialIcons
-              name="arrow-left"
-              size={50}
-              onPress={() => navigation.navigate("ProfileStack")}
-            />
-          ),
+          headerTintColor: "#000",
         }}
       />
     </Stack.Navigator>
