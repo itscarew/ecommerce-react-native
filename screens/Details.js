@@ -6,7 +6,7 @@ import { Layout } from "../components/Layout";
 import AppContext from "../contextApi/AppContext";
 
 function DetailsScreen({ route }) {
-  const { cartState } = useContext(AppContext);
+  const { cartState, modalState } = useContext(AppContext);
   const { id } = route.params;
 
   const [product, setProduct] = useState();
@@ -52,6 +52,7 @@ function DetailsScreen({ route }) {
             onPress={async () => {
               await cartState.addToCart(product?._id);
               await cartState.getUserCarts();
+              modalState.openCartModal();
             }}
           >
             <Text style={styles.buttonText}>Add to Cart</Text>

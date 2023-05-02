@@ -4,12 +4,14 @@ import { CartModal } from "./CartModal";
 
 export const Layout = ({ children }) => {
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <SafeAreaView style={[styles.container]}>
-        <CartModal></CartModal>
-        <View style={{ flex: 1, width: "92%" }}>{children}</View>
-      </SafeAreaView>
-    </ScrollView>
+    <>
+      <CartModal />
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <SafeAreaView style={[styles.container]}>
+          <View style={{ flex: 1, width: "92%" }}>{children}</View>
+        </SafeAreaView>
+      </ScrollView>
+    </>
   );
 };
 

@@ -1,11 +1,21 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import { useContext } from "react";
-import { Dimensions } from "react-native";
-import { Modal, SafeAreaView, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  Modal,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import AppContext from "../contextApi/AppContext";
+import { CartCard } from "./CartCard";
 
-export const CartModal = ({ children }) => {
-  const { modalState } = useContext(AppContext);
+export const CartModal = () => {
+  const { modalState, cartState } = useContext(AppContext);
+  const navigation = useNavigation();
   return (
     <Modal
       animationType="slide"
@@ -22,7 +32,38 @@ export const CartModal = ({ children }) => {
               modalState.closeCartModal();
             }}
           />
-          {children}
+          <Text
+            style={{
+              marginLeft: 5,
+              fontSize: 16,
+              fontWeight: "600",
+              marginBottom: 15,
+            }}
+          >
+            MyShop cart
+          </Text>
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            {cartState.carts[0]?.products?.map((item) => {
+              return (
+                <CartCard
+                  key={item._id}
+                  product={item.productId}
+                  screen={"DetailsStack"}
+                  quantity={item.quantity}
+                  isCartModal
+                />
+              );
+            })}
+          </ScrollView>
+          <TouchableOpacity
+            style={[styles.button1, { marginVertical: 10 }]}
+            onPress={() => {
+              modalState.closeCartModal();
+              navigation.navigate("Cart");
+            }}
+          >
+            <Text style={styles.buttonText1}>Go to cart </Text>
+          </TouchableOpacity>
         </SafeAreaView>
       </SafeAreaView>
     </Modal>
@@ -36,15 +77,27 @@ const styles = StyleSheet.create({
     margin: 0,
   },
   contentContainer: {
-    height: Dimensions.get("window").height / 1.5,
+    height: Dimensions.get("window").height / 1.3,
     backgroundColor: "white",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 30,
   },
   closeButton: {
-    alignSelf: "flex-end",
-    marginTop: 10,
+    position: "absolute",
+    top: 15,
+    right: 15,
+  },
+  button1: {
+    width: "100%",
+    backgroundColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 50,
+    marginBottom: 18,
+  },
+  buttonText1: {
+    color: "#fff",
   },
 });

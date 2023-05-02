@@ -8,9 +8,9 @@ import AppContext from "../contextApi/AppContext";
 import { useContext } from "react";
 import { CartActionButton } from "./CartActionButton";
 
-export const CartCard = ({ product, screen, quantity }) => {
+export const CartCard = ({ product, screen, quantity, isCartModal }) => {
   const navigation = useNavigation();
-  const { cartState } = useContext(AppContext);
+  const { cartState, modalState } = useContext(AppContext);
 
   const eachProductTotalAmount = (price, quantity = 1) => {
     return price * quantity;
@@ -19,7 +19,13 @@ export const CartCard = ({ product, screen, quantity }) => {
   return (
     <Pressable
       style={styles.card}
-      onPress={() => navigation.navigate(screen, { id: product?._id })}
+      onPress={() => {
+        if (isCartModal) {
+          modalState.closeCartModal();
+          navigation.navigate(screen, { id: product?._id });
+        }
+        navigation.navigate(screen, { id: product?._id });
+      }}
     >
       <MaterialIcons
         name="close"
