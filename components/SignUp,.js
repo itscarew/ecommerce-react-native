@@ -59,7 +59,6 @@ function SignUpComponent({ navigation }) {
               />
               <BasicTextInput
                 placeholder="last name"
-                secureTextEntry={true}
                 value={props.values.lastName}
                 name="lastName"
                 onChangeText={props.handleChange("lastName")}
