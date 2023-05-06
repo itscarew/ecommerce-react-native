@@ -14,6 +14,7 @@ import { saveAccessToken } from "../utils/AsyncStorage";
 import { signInSchema } from "../utils/validationSchema";
 import { AlertMessage } from "./Alert";
 import { BasicTextInput } from "./Input";
+import { MainToast } from "./Toast";
 
 function SignInComponent() {
   const { modalState, userState } = useContext(AppContext);
@@ -23,9 +24,9 @@ function SignInComponent() {
       const res = await UserApi.post(`/signin`, values);
       await saveAccessToken(res.data.token);
       await userState.fetchAccessToken();
-      Alert.alert("MyShop", res.data.message, [{ text: "OK" }]);
+      MainToast({ type: "success", message: res.data.message });
     } catch (error) {
-      throw error;
+      MainToast({ type: "error", message: "Couldn't login" });
     }
   };
 

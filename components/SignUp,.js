@@ -6,6 +6,7 @@ import AppContext from "../contextApi/AppContext";
 import { signUpSchema } from "../utils/validationSchema";
 import { AlertMessage } from "./Alert";
 import { BasicTextInput } from "./Input";
+import { MainToast } from "./Toast";
 
 function SignUpComponent({ navigation }) {
   const { buttonComponentState, modalState } = useContext(AppContext);
@@ -13,9 +14,9 @@ function SignUpComponent({ navigation }) {
   const signUp = async (values) => {
     try {
       const res = await UserApi.post(`/signup`, values);
-      Alert.alert("MyShop", res.data.message, [{ text: "OK" }]);
+      MainToast({ type: "success", message: res.data.message });
     } catch (error) {
-      throw error;
+      MainToast({ type: "error", message: "Couldn't signup " });
     }
   };
 

@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ProductApi } from "../api/api";
 import { CartActionButton } from "../components/CartActionButton";
 import { Layout } from "../components/Layout";
+import { MainToast } from "../components/Toast";
 import AppContext from "../contextApi/AppContext";
 
 function DetailsScreen({ route }) {
@@ -15,7 +16,10 @@ function DetailsScreen({ route }) {
       const res = await ProductApi.get(`/${id}`);
       setProduct(res?.data?.data);
     } catch (error) {
-      throw error;
+      MainToast({
+        type: "error",
+        message: "Can't get product",
+      });
     }
   };
 

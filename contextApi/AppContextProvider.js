@@ -3,6 +3,8 @@ import { CartApi, ProductApi } from "../api/api";
 import { getAccessToken, saveAccessToken } from "../utils/AsyncStorage";
 import AppContext from "./AppContext";
 import jwtDecode from "jwt-decode";
+import { MainToast } from "../components/Toast";
+import Toast from "react-native-toast-message";
 
 const AppContextProvider = ({ children }) => {
   const [modal, showModal] = useState(false);
@@ -35,15 +37,13 @@ const AppContextProvider = ({ children }) => {
     }
   };
 
-  // console.log(token, "lol");
-
   const [products, setProducts] = useState([]);
   const getProducts = async () => {
     try {
       const res = await ProductApi.get(`/`);
       setProducts(res?.data?.data);
     } catch (error) {
-      throw error;
+      MainToast({ type: "error", message: "Can't get products" });
     }
   };
 
@@ -56,7 +56,7 @@ const AppContextProvider = ({ children }) => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      throw error;
+      MainToast({ type: "error", message: "Can't get products" });
     }
   };
 
@@ -66,7 +66,7 @@ const AppContextProvider = ({ children }) => {
       const res = await CartApi.get(`/user/${userData?.userId}`);
       setCarts(res?.data?.data);
     } catch (error) {
-      throw error;
+      MainToast({ type: "error", message: "Can't get carts" });
     }
   };
 
@@ -74,7 +74,7 @@ const AppContextProvider = ({ children }) => {
     try {
       await CartApi.patch(`/myuser/${carts[0]?._id}/${productId}`);
     } catch (error) {
-      throw error;
+      MainToast({ type: "error", message: "Can't add products. Please Login" });
     }
   };
 
@@ -82,7 +82,10 @@ const AppContextProvider = ({ children }) => {
     try {
       await CartApi.patch(`/myuser/${carts[0]?._id}/${productId}/deduct`);
     } catch (error) {
-      throw error;
+      MainToast({
+        type: "error",
+        message: "Can't perfrom operation. Please Login",
+      });
     }
   };
 
@@ -90,7 +93,10 @@ const AppContextProvider = ({ children }) => {
     try {
       await CartApi.delete(`/myuser/${carts[0]?._id}/${productId}`);
     } catch (error) {
-      throw error;
+      MainToast({
+        type: "error",
+        message: "Can't deduct products. Please Login",
+      });
     }
   };
 

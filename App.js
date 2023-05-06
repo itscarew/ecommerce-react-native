@@ -3,6 +3,8 @@ import TabNavigation from "./navigations/app-bottom-tab-navigation";
 import { useEffect, useState } from "react";
 import { SplashScreenComponent } from "./components/SplashScreen";
 import AppContextProvider from "./contextApi/AppContextProvider";
+import Toast from "react-native-toast-message";
+import { View } from "react-native";
 
 export default function App() {
   const [show, setShow] = useState(false);
@@ -25,6 +27,9 @@ export default function App() {
       ) : (
         <NavigationContainer>
           <AppContextProvider>
+            <View style={{ zIndex: 10 }}>
+              <Toast />
+            </View>
             <TabNavigation />
           </AppContextProvider>
         </NavigationContainer>
