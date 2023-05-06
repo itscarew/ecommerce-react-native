@@ -24,27 +24,25 @@ function ShopScreen({ navigation }) {
   const renderScene = SceneMap(
     data.reduce((acc, { key }) => {
       acc[key] = () => {
-        if (!loaderState.loading) {
-          return (
-            <>
-              <Layout>
-                <View style={styles.cardContainer}>
-                  {productState.categoryProducts.map((item) => {
-                    return (
-                      <ProductCard
-                        key={item._id}
-                        product={item}
-                        screen={"DetailsStack"}
-                      />
-                    );
-                  })}
-                </View>
-              </Layout>
-            </>
-          );
-        }
-        return <Loader />;
+        return (
+          <>
+            <Layout>
+              <View style={styles.cardContainer}>
+                {productState.categoryProducts.map((item) => {
+                  return (
+                    <ProductCard
+                      key={item._id}
+                      product={item}
+                      screen={"DetailsStack"}
+                    />
+                  );
+                })}
+              </View>
+            </Layout>
+          </>
+        );
       };
+
       return acc;
     }, {})
   );

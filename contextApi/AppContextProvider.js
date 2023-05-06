@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CartApi, ProductApi } from "../api/api";
+import { getAccessToken, saveAccessToken } from "../utils/AsyncStorage";
 import AppContext from "./AppContext";
+import jwtDecode from "jwt-decode";
 
 const AppContextProvider = ({ children }) => {
   const [modal, showModal] = useState(false);
   const [cartModal, showCartModal] = useState(false);
   const [buttonComponent, setButtonComponent] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState();
+  const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState(null);
   const [token, setToken] = useState("");
 
   const openModal = () => {
@@ -22,6 +24,18 @@ const AppContextProvider = ({ children }) => {
   const closeCartModal = () => {
     showCartModal(false);
   };
+
+  //token stuff
+  const fetchAccessToken = async () => {
+    const token = await getAccessToken();
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setToken(token);
+      setUserData(decodedToken);
+    }
+  };
+
+  // console.log(token, "lol");
 
   const [products, setProducts] = useState([]);
   const getProducts = async () => {
@@ -49,47 +63,33 @@ const AppContextProvider = ({ children }) => {
   const [carts, setCarts] = useState([]);
   const getUserCarts = async () => {
     try {
-      setLoading(true);
-      const res = await CartApi.get(
-        `/user/${userData?._id || "6427678669827d1ee7162600"}`
-      );
+      const res = await CartApi.get(`/user/${userData?.userId}`);
       setCarts(res?.data?.data);
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
       throw error;
     }
   };
 
   const addToCart = async (productId) => {
     try {
-      setLoading(true);
       await CartApi.patch(`/myuser/${carts[0]?._id}/${productId}`);
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
       throw error;
     }
   };
 
   const deductQuantityFromCart = async (productId) => {
     try {
-      setLoading(true);
       await CartApi.patch(`/myuser/${carts[0]?._id}/${productId}/deduct`);
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
       throw error;
     }
   };
 
   const removeFromCart = async (productId) => {
     try {
-      setLoading(true);
       await CartApi.delete(`/myuser/${carts[0]?._id}/${productId}`);
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
       throw error;
     }
   };
@@ -118,7 +118,13 @@ const AppContextProvider = ({ children }) => {
       getCategoryProducts,
     },
     loaderState: { loading },
-    userState: { userData, setUserData, token, setToken },
+    userState: {
+      userData,
+      setUserData,
+      token,
+      setToken,
+      fetchAccessToken,
+    },
     cartState: {
       carts,
       getUserCarts,

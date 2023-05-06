@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { UserApi } from "../api/api";
 import AppContext from "../contextApi/AppContext";
+import { saveAccessToken } from "../utils/AsyncStorage";
 import { signInSchema } from "../utils/validationSchema";
 import { AlertMessage } from "./Alert";
 import { BasicTextInput } from "./Input";
@@ -20,8 +21,8 @@ function SignInComponent() {
   const signIn = async (values) => {
     try {
       const res = await UserApi.post(`/signin`, values);
-      userState.setUserData(res.data.data);
-      userState.setToken(res.data.token);
+      await saveAccessToken(res.data.token);
+      await userState.fetchAccessToken();
       Alert.alert("MyShop", res.data.message, [{ text: "OK" }]);
     } catch (error) {
       throw error;

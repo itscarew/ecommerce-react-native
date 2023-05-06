@@ -14,7 +14,16 @@ function CartScreen({ navigation }) {
   useEffect(() => {
     cartState.getUserCarts();
     const unsubscribe = navigation.addListener("focus", () => {
-      cartState.getUserCarts();
+      if (userState.userData) {
+        cartState.getUserCarts();
+      }
+    });
+    return unsubscribe;
+  }, [userState.userData]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      userState.fetchAccessToken();
     });
     return unsubscribe;
   }, []);
@@ -38,7 +47,7 @@ function CartScreen({ navigation }) {
       </MainModal>
 
       <Layout>
-        {userState.token ? (
+        {!userState.userData ? (
           <View
             style={{
               flex: 1,

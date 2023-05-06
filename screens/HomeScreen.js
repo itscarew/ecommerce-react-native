@@ -16,7 +16,6 @@ function HomeScreen({ navigation }) {
   const { productState, cartState } = useContext(AppContext);
   useEffect(() => {
     productState.getProducts();
-    cartState.getUserCarts();
   }, []);
 
   return (
